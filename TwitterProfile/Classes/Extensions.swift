@@ -49,9 +49,9 @@ public extension UIViewController {
             return topLayoutGuide.length
         }
     }
-    
-    func tp_configure(with dataSource: TPDataSource, delegate: TPProgressDelegate? = nil) {
-        let vc = ContainerViewController()
+
+    func tp_configure(with dataSource: TPDataSource, delegate: TPProgressDelegate? = nil, pagingEnabled: Bool = false) {
+        let vc = ContainerViewController(pagingEnabled: pagingEnabled)
         vc.dataSource = dataSource
         vc.delegate = delegate
         self.add(vc)

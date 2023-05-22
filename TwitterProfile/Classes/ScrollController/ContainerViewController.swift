@@ -21,6 +21,7 @@ class ContainerViewController : UIViewController, UIScrollViewDelegate {
         }
     }
 
+    private let pagingEnabled: Bool
     private var currentIndex: Int = 0
     
     private var pagerTabHeight: CGFloat{
@@ -42,8 +43,17 @@ class ContainerViewController : UIViewController, UIScrollViewDelegate {
     private var bottomVC: (UIViewController & PagerAwareProtocol)!
 
     private var contentOffsets: [Int: CGFloat] = [:]
-    
-    
+
+    init(pagingEnabled: Bool) {
+        self.pagingEnabled = pagingEnabled
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        self.pagingEnabled = false
+        super.init(coder: coder)
+    }
+
     deinit {
         self.panViews.forEach({ (arg0) in
             let (_, value) = arg0
@@ -58,7 +68,8 @@ class ContainerViewController : UIViewController, UIScrollViewDelegate {
         containerScrollView = UIScrollView()
         containerScrollView.scrollsToTop = false
         containerScrollView.showsVerticalScrollIndicator = false
-        
+        containerScrollView.isPagingEnabled = self.pagingEnabled
+
         ///add overlay scroll view for handling content offsets. content size will be superview height + bottom view contentSize (if UIScrollView) or height (if UIView)
         overlayScrollView = UIScrollView()
         overlayScrollView.showsVerticalScrollIndicator = false
